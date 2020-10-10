@@ -21,7 +21,7 @@ for i in pf2:
     i.insert(0,k)
     k+=1
     x.add_row(i)
-    print(i)
+    # print(i)
 
 print((x))
 
