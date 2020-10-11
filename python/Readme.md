@@ -16,4 +16,4 @@
 1. Run `$ aws configure`
 2. Clone the repo `$ git clone https://github.com/kumarahul98/AWS.git`
 3. Change Directory `$ cd AWS/python`
-4. Run the script `$ python solution.py`
+4. Run the script `$ python main.py`
