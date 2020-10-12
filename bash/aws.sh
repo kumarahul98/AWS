@@ -10,10 +10,9 @@ Service='ec2'
 while :
 do
 aws ec2 describe-instances --query 'Reservations[].Instances[].{InstanceId: InstanceId,State: State.Name,Name: Tags[?Key==`Name`]|[0].Value}' --region $Region --output table
-echo "Select instance id to change its state"
-read InstanceId
+read -p "Select instance id to change its state or -1 to exit: "  InstanceId
 if [[ $InstanceId == "-1" ]]
- then
+then
     break
 fi
 for i in $InstanceId
