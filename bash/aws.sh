@@ -1,13 +1,15 @@
 #!/bin/sh
 
-echo "What's your region"
-read Region
-echo "Specify Service Name"
-read Service
-InstanceId="i-041057f9fade3a43f"
+# echo "What's your region"
+# read Region 
+# echo "Specify Service Name"
+# read Service 
+
+Region='us-east-1'
+Service='ec2'
 while :
 do
-aws ec2 describe-instances --query 'Reservations[].Instances[].[InstanceId,State.Name,Tags[?Key==`Name`].Value[]]' --region $Region --output text
+aws ec2 describe-instances --query 'Reservations[].Instances[].{InstanceId: InstanceId,State: State.Name,Name: Tags[?Key==`Name`]|[0].Value}' --region $Region --output table
 echo "Select instance id to change its state"
 read InstanceId
 if [[ $InstanceId == "-1" ]]
@@ -20,7 +22,7 @@ echo $i
 var=$(aws ec2 describe-instances --instance-ids $i --query 'Reservations[].Instances[].[State.Name]' --output text)
 if [[ $var == "running" ]]
 then
-echo "Stopping"
+echo "Stopping"  
 aws ec2 stop-instances --instance-ids $i > /dev/null
 elif [[ $var == "stopped" ]]
 then
